@@ -4,7 +4,6 @@ package buffreader
 import (
 	"bytes"
 	"encoding/binary"
-	"fmt"
 )
 
 type Buffer struct {
@@ -20,10 +19,8 @@ func NewBuffer(bytes []byte) Buffer {
 }
 
 func (buf Buffer) ReadInt32() (ret int32) {
-	data := bytes.NewBuffer(buf.Bytes[buf.Offset : buf.Offset+4])
-	binary.Read(data, binary.LittleEndian, &ret)
-	fmt.Println(ret)
-	// Add to offset
+	binary.Read(bytes.NewBuffer(buf.Bytes[buf.Offset:buf.Offset+4]), binary.LittleEndian, &ret)
+	// Add 32 bits to offset
 	buf.Offset = buf.Offset + 4
 	return
 }
